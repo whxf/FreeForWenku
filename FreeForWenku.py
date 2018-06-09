@@ -102,7 +102,7 @@ if __name__ == "__main__":
     try:
         print("""
 ###Athor:Lz1y
-###Blog:www.Lz1y
+###Blog:www.Lz1y.cn
 ###TIPS:PDF|PPT只能下载图片
         """)
         eval(type.upper())(url)
