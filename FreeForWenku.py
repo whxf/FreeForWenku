@@ -80,7 +80,7 @@ def TXT(url):
             f.write(texts[i])
     print("文档保存在" + filename)
 
-def FPD(url):
+def PDF(url):
     doc_id = re.findall('view/(.*).html',url)[0]
     url = "https://wenku.baidu.com/browse/getbcsurl?doc_id="+doc_id+"&pn=1&rn=99999&type=ppt"
     html = requests.get(url).text
