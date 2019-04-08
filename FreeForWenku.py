@@ -5,7 +5,7 @@ import re
 import requests
 
 session = requests.session()
-info_path = 'file_info.json'
+info_path = os.path.join('url_info', '一站到底.json')
 
 
 def parse_title(content):
@@ -18,9 +18,18 @@ def get_url_data(url):
     :param url: 文档的链接
     :return:
     """
+    title = None
+    html = None
     url_response = session.get(url)
-    html = url_response.content.decode('gbk')
-    title = parse_title(html)
+    try:
+        html = url_response.content.decode('gbk')
+        title = parse_title(html)
+
+    except:
+        print('pass', url)
+        title = None
+        html = None
+        pass
     return title, html
 
 
@@ -31,6 +40,8 @@ def DOC(url):
     :return:
     """
     title, html = get_url_data(url)
+    if title is None:
+        return
     content_url_list = re.findall('(https.*?0.json.*?)\\\\x22}', html)
     url_list_len = (len(content_url_list) // 2)
     content_url_list = content_url_list[:url_list_len]
@@ -67,6 +78,8 @@ def TXT(url):
     parse_url = "https://wenku.baidu.com/api/doc/getdocinfo?callback=cb&doc_id=" + doc_id
     try:
         title, html = get_url_data(parse_url)
+        if title is None:
+            return
         md5 = re.findall('"md5sum":"(.*?)"', html)[0]
         pn = re.findall('"totalPageNum":"(.*?)"', html)[0]
         rsign = re.findall('"rsign":"(.*?)"', html)[0]
@@ -91,6 +104,6 @@ if __name__ == "__main__":
     with open(info_path, 'r', encoding='utf-8') as f:
         info_data = json.loads(f.read())
     for item in info_data:
-        url = item['url']
-        type = item['type']
-        eval(type.upper())(url)
+        file_url = item['url']
+        file_type = item['type']
+        eval(file_type.upper())(file_url)
