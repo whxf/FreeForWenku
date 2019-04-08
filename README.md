@@ -1,6 +1,6 @@
 # FreeForWenku
 
-免费下载百度文库收费资料，目前本项目仅对原项目的doc爬取优化，其余的待完成优化。
+免费下载百度文库收费资料，目前本项目仅对原项目的doc、txt爬取优化，其余的待完成优化。
 
 本项目fork from： https://github.com/Lz1y/FreeForWenku
 
@@ -22,8 +22,9 @@
   }
 ]
 ```
+注意： type的可选值有```DOC TXT```，大小写不限
 
 ### Step 2： 运行```FreeForWenku.py```
 
-本脚本支持DOC文档的爬取，爬去结果会以TXT文件的形式存储在```output```文件夹中，文件命名为```file_title.txt```
+本脚本支持DOC、TXT文档的爬取，爬去结果会以TXT文件的形式存储在```output```文件夹中，文件命名为```file_title.txt```
 

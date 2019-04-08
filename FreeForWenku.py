@@ -57,6 +57,36 @@ def DOC(url):
     print('Finish process {}'.format(url))
 
 
+def TXT(url):
+    """
+    获取txt文档的内容
+    :param url: txt文档链接
+    :return:
+    """
+    doc_id = re.findall('view/(.*).html', url)[0]
+    parse_url = "https://wenku.baidu.com/api/doc/getdocinfo?callback=cb&doc_id=" + doc_id
+    try:
+        title, html = get_url_data(parse_url)
+        md5 = re.findall('"md5sum":"(.*?)"', html)[0]
+        pn = re.findall('"totalPageNum":"(.*?)"', html)[0]
+        rsign = re.findall('"rsign":"(.*?)"', html)[0]
+        parse_url = 'https://wkretype.bdimg.com/retype/text/' + doc_id + '?rn=' + pn + '&type=txt' + md5 + '&rsign=' + rsign
+
+        contents = session.get(parse_url).text
+        content_jsons = json.loads(contents)
+        text_segments = re.findall("'c': '(.*?)',", str(content_jsons))
+
+        filename = os.path.join('output', title + '.txt')
+        with open(filename, 'a', encoding='utf-8') as f:
+            for segment in text_segments:
+                tmp_segment = segment.replace('\\r', '\r')
+                tmp_segment = tmp_segment.replace('\\n', '\n')
+                f.write(tmp_segment)
+    except Exception:
+        print('爬取失败！出错位置：')
+        print('url: {}'.format(url))
+    print('Finish process {}'.format(url))
+
 if __name__ == "__main__":
     with open(info_path, 'r', encoding='utf-8') as f:
         info_data = json.loads(f.read())
