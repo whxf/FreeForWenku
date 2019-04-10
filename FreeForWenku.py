@@ -28,15 +28,15 @@ def DOC(url):
     :param url: doc文档的链接
     :return:
     """
-    title, html = get_url_data(url)
-    content_url_list = re.findall('(https.*?0.json.*?)\\\\x22}', html)
-    url_list_len = (len(content_url_list) // 2)
-    content_url_list = content_url_list[:url_list_len]
-    filename = os.path.join('output', title + '.txt')
-    line_flag = 0  # 用来整合数据：相同时表示同一行数据，直接拼接；否则，需要在数据间加上换行符号
-    for content_url in content_url_list:
-        content_url = content_url.replace('\\', '')
-        try:
+    try:
+        title, html = get_url_data(url)
+        content_url_list = re.findall('(https.*?0.json.*?)\\\\x22}', html)
+        url_list_len = (len(content_url_list) // 2)
+        content_url_list = content_url_list[:url_list_len]
+        filename = os.path.join('output', title + '.txt')
+        line_flag = 0  # 用来整合数据：相同时表示同一行数据，直接拼接；否则，需要在数据间加上换行符号
+        for content_url in content_url_list:
+            content_url = content_url.replace('\\', '')
             content_html = session.get(content_url).text
             content_segments = re.findall('"c":"(.*?)".*?"y":(.*?),', content_html)
 
@@ -49,9 +49,10 @@ def DOC(url):
                 with open(filename, 'a', encoding='utf-8') as f:
                     f.write(
                         segment_join + segment[0].encode('utf-8').decode('unicode_escape', 'ignore').replace('\\', ''))
-        except Exception:
-            logger.error('爬取失败！出错位置：')
-            logger.error('url: {}\ncontent segment url: {}'.format(url, content_url))
+    except Exception as e:
+        logger.error('爬取失败！出错位置：')
+        logger.error('url: {}'.format(url))
+        logger.error(e)
     logger.debug('Finish process {}'.format(url))
 
 
@@ -61,8 +62,8 @@ def TXT(url):
     :param url: txt文档链接
     :return:
     """
-    title, _ = get_url_data(url)  # 获取title
     try:
+        title, _ = get_url_data(url)  # 获取title
         # 解码content url
         doc_id = re.findall('view/(.*).html', url)[0]
         format_url = "https://wenku.baidu.com/api/doc/getdocinfo?callback=cb&doc_id=" + doc_id
@@ -81,9 +82,10 @@ def TXT(url):
                 segment = segment.replace('\\r', '\r')
                 segment = segment.replace('\\n', '\n')
                 f.write(segment)
-    except Exception:
+    except Exception as e:
         logger.error('爬取失败！出错位置：')
         logger.error('url: {}'.format(url))
+        logger.error(e)
     logger.debug('Finish process {}'.format(url))
 
 
@@ -94,3 +96,4 @@ if __name__ == "__main__":
         file_url = item['url']
         file_type = item['type']
         eval(file_type.upper())(file_url)
+    logger.debug('done!!!')
