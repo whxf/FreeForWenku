@@ -22,3 +22,5 @@ file_handler.setLevel(level=logging.ERROR)
 
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
+
+print(os.getcwd())

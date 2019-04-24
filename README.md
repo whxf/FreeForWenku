@@ -15,7 +15,7 @@
   {
     "type": "doc",
     "url": "https://wenku.baidu.com/view/9ff1b7e64a7302768e9939f4.html?from=search"
-  },````
+  },
   {
     "type": "",
     "url": ""
