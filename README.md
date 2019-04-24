@@ -7,7 +7,10 @@
 
 ## 使用方法：
 
-* ***Step 1：*** Clone项目 
+* ***Step 1：*** Clone项目，安装依赖(本项目基于Python3.6开发)
+    ```
+    pip install -r requirements.txt
+    ```  
 * ***Step 2：*** 修改```main.py```中的参数 
     ```
         # 需要修改的参数
