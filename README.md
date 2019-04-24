@@ -1,34 +1,44 @@
 # FreeForWenku
 
-免费下载百度文库收费资料，支持url批量爬取。目前本项目仅对原项目的doc、txt爬取优化，其余的待完成优化。
+免费下载百度文库收费资料，支持关键字搜索，以及url批量爬取。目前本项目仅对原项目的doc、txt爬取优化，其余的待完成优化。
 
 本项目fork from： https://github.com/Lz1y/FreeForWenku
 
 
 ## 使用方法：
 
-### Step 1： 定义需要爬去的文件链接信息
+* ***Step 1：*** Clone项目 
+* ***Step 2：*** 修改```main.py```中的参数 
+    ```
+        # 需要修改的参数
+        search_word = '一站到底'  #  待搜索关键词
+        max_page = 1  # 最大的检索页数
+        # 无需求修改的参数
+        session = requests.session()
+        url_output_dir = os.path.join(os.getcwd(), 'url_outputs')  # 关键词搜索url结果输出位置
+        txt_output_dir = os.path.join(os.getcwd(), 'txt_outputs')  # 根据url获取txt文件的输出位置
+    ```
+* ***Step 3：*** ```run main.py``` 
 
-文件链接信息存储在```file_info.json```文件中，存储格式为：
+## 文件目录：
+
 ```
-[
-  {
-    "type": "doc",
-    "url": "https://wenku.baidu.com/view/9ff1b7e64a7302768e9939f4.html?from=search"
-  },
-  {
-    "type": "",
-    "url": ""
-  }
-]
+FreeFromWenku
+│  main.py              程序入口
+│  README.md            read me
+│
+├─log
+│      error.log        error log
+│
+├─txt_outputs           根据url获取txt文件的输出位置
+│  └─一站到底           每个关键词的相关文件存储在一个文件夹中
+│          “一站到底”活动方案.txt
+│
+├─url_outputs               关键词搜索url结果输出位置
+│      一站到底.json        关键词搜索获取的url
+│
+└─utils
+      logger.py             logger      
+      url_to_txt.py         包含根据url获取doc和txt文件
+      word_to_url.py        搜索关键词，获取结果url
 ```
-注意： type的可选值有```DOC TXT```，大小写不限
-
-### Step 2： 运行```FreeForWenku.py```
-
-本脚本支持DOC、TXT文档的爬取，爬去结果会以TXT文件的形式存储在```output```文件夹中，文件命名为```file_title.txt```
-
-
-### Step 3： Log
-
-运行时的error log存储在```log\error.log```中
