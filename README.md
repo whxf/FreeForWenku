@@ -7,11 +7,14 @@
 
 ## 使用方法：
 
-* ***Step 1：*** Clone项目，安装依赖(本项目基于Python3.6开发)
+* ***Step 0：*** Clone项目，安装依赖(本项目基于Python3.6开发)
     ```
     pip install -r requirements.txt
     ```  
-* ***Step 2：*** 修改```main.py```中的参数 
+ 
+### 根据关键词批量爬取
+
+* ***Step 1：*** 修改```main.py```中的参数 
     ```
         # 需要修改的参数
         search_word = '一站到底'  #  待搜索关键词
@@ -21,7 +24,20 @@
         url_output_dir = os.path.join(os.getcwd(), 'url_outputs')  # 关键词搜索url结果输出位置
         txt_output_dir = os.path.join(os.getcwd(), 'txt_outputs')  # 根据url获取txt文件的输出位置
     ```
-* ***Step 3：*** ```run main.py``` 
+* ***Step 2：*** ```run main.py``` 
+
+### 爬取单个doc文件
+
+```
+>>> python get_doc.py -url doc_url -out outputs
+```
+
+
+例子：
+```
+FreeForWenku>>> python get_doc.py -url https://wenku.baidu.com/view/b3ff81bcfbb069dc5022aaea998fcc22bcd14386.html?from=search -out outputs
+2019-11-13 16:33:04,641 - utils.logger - DEBUG - Finish process https://wenku.baidu.com/view/b3ff81bcfbb069dc5022aaea998fcc22bcd14386.html?from=search
+```
 
 ## 文件目录：
 
