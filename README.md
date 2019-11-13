@@ -38,26 +38,3 @@
 FreeForWenku>>> python get_doc.py -url https://wenku.baidu.com/view/b3ff81bcfbb069dc5022aaea998fcc22bcd14386.html?from=search -out outputs
 2019-11-13 16:33:04,641 - utils.logger - DEBUG - Finish process https://wenku.baidu.com/view/b3ff81bcfbb069dc5022aaea998fcc22bcd14386.html?from=search
 ```
-
-## 文件目录：
-
-```
-FreeFromWenku
-│  main.py              程序入口
-│  README.md            read me
-│
-├─log
-│      error.log        error log
-│
-├─txt_outputs           根据url获取txt文件的输出位置
-│  └─一站到底           每个关键词的相关文件存储在一个文件夹中
-│          “一站到底”活动方案.txt
-│
-├─url_outputs               关键词搜索url结果输出位置
-│      一站到底.json        关键词搜索获取的url
-│
-└─utils
-      logger.py             logger      
-      url_to_txt.py         包含根据url获取doc和txt文件
-      word_to_url.py        搜索关键词，获取结果url
-```
